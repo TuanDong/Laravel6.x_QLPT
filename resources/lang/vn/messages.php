@@ -8,5 +8,6 @@ return [
     'mes_login' => 'Đăng Nhập Khác',
     'en' => 'Tiếng Anh',
     'vn' => 'Tiếng Việt',
-    'length' => 'chiều dài tên đăng nhập lớn hơn 4'
+    'length' => 'chiều dài lớn hơn 8',
+    'autlogin' => 'Tên đăng nhập hoặc mật khẩu không đúng'
 ];

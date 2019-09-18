@@ -11,13 +11,13 @@
 |
 */
 
-
+Auth::routes();
 Route::get('language/{locale}', function ($locale) {
     Session::put('locale', $locale);
     return redirect()->back();
 });
-Route::get('/', function () {
-    return view('login');
-});
-Route::post('/','Auth\LoginController@authenticate')->name('login');
-
+Route::get('/', 'Auth\LoginController@login')->name('login');
+Route::post('/','Auth\LoginController@authenticate')->name('aut');
+Route::get('logout', 'Auth\LoginController@logout');
+Route::post('forget', 'Auth\LoginController@forget_password')->name('forget');
+Route::get('home', 'HomeController@index');

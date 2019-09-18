@@ -8,5 +8,6 @@ return [
     'mes_login' => 'Or Login Using',
     'en' => 'English',
     'vn' => 'Vietnames',
-    'length' => 'user name length than 4 character'
+    'length' => 'length than 8 character',
+    'autlogin' => 'User name or password not ringth'
 ];

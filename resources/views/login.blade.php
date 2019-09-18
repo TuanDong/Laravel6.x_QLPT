@@ -4,7 +4,7 @@
 		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
 		<meta charset="utf-8" />
 		<title>Login Page - Ace Admin</title>
-
+        <link rel="shortcut icon" type="image/png" href="http://example.com/favicon.png"/>
 		<meta name="description" content="User login page" />
 		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0" />
         <meta name="csrf-token" content="{{ csrf_token() }}">
@@ -60,6 +60,13 @@
                                     </ul>
                                 </div>
                             @endif
+                            @if (session('success'))
+                                <div class="alert alert-success">
+                                    <ul>
+                                        <li>{{ session('success') }}</li>
+                                    </ul>
+                                </div>
+                            @endif
 							<div class="position-relative">
 								<div id="login-box" class="login-box visible widget-box no-border">
 									<div class="widget-body">
@@ -71,7 +78,7 @@
 
 											<div class="space-6"></div>
 
-                                            <form  action="{{route('login')}}" method="POST">
+                                            <form  action="{{route('aut')}}" method="POST">
                                                 @csrf
 												<fieldset>
                                                     <label class="block clearfix">
@@ -138,23 +145,23 @@
 
 										<div class="toolbar clearfix">
 											<div>
-												<a href="#" data-target="#forgot-box" class="forgot-password-link">
-													{{-- <i class="ace-icon fa fa-arrow-left"></i>
-													I forgot my password --}}
+												<a data-target="#forgot-box" class="forgot-password-link" style="cursor: pointer;">
+													<i class="ace-icon fa fa-arrow-left"></i>
+													I forgot my password
 												</a>
 											</div>
 
 											<div>
-												<a href="#" data-target="#signup-box" class="user-signup-link">
-													{{-- I want to register
-													<i class="ace-icon fa fa-arrow-right"></i> --}}
+												<a data-target="#signup-box" class="user-signup-link" style="cursor: pointer;">
+													I want to register
+													<i class="ace-icon fa fa-arrow-right"></i>
 												</a>
 											</div>
 										</div>
 									</div><!-- /.widget-body -->
 								</div><!-- /.login-box -->
 
-								{{-- <div id="forgot-box" class="forgot-box widget-box no-border">
+								<div id="forgot-box" class="forgot-box widget-box no-border">
 									<div class="widget-body">
 										<div class="widget-main">
 											<h4 class="header red lighter bigger">
@@ -167,17 +174,18 @@
 												Enter your email and to receive instructions
 											</p>
 
-											<form>
+											<form action="{{ route('forget') }}" method="POST">
+                                                @csrf
 												<fieldset>
 													<label class="block clearfix">
 														<span class="block input-icon input-icon-right">
-															<input type="email" class="form-control" placeholder="Email" />
+															<input type="email" class="form-control" name="email_forget" placeholder="Email" />
 															<i class="ace-icon fa fa-envelope"></i>
 														</span>
 													</label>
 
 													<div class="clearfix">
-														<button type="button" class="width-35 pull-right btn btn-sm btn-danger">
+														<button type="submit" class="width-35 pull-right btn btn-sm btn-danger">
 															<i class="ace-icon fa fa-lightbulb-o"></i>
 															<span class="bigger-110">Send Me!</span>
 														</button>
@@ -187,15 +195,15 @@
 										</div><!-- /.widget-main -->
 
 										<div class="toolbar center">
-											<a href="#" data-target="#login-box" class="back-to-login-link">
+											<a data-target="#login-box" class="back-to-login-link">
 												Back to login
 												<i class="ace-icon fa fa-arrow-right"></i>
 											</a>
 										</div>
 									</div><!-- /.widget-body -->
-								</div><!-- /.forgot-box --> --}}
+								</div><!-- /.forgot-box -->
 
-								{{-- <div id="signup-box" class="signup-box widget-box no-border">
+								<div id="signup-box" class="signup-box widget-box no-border">
 									<div class="widget-body">
 										<div class="widget-main">
 											<h4 class="header green lighter bigger">
@@ -206,32 +214,33 @@
 											<div class="space-6"></div>
 											<p> Enter your details to begin: </p>
 
-											<form>
+											<form  action="{{route('register')}}" method="POST">
+                                                @csrf
 												<fieldset>
 													<label class="block clearfix">
 														<span class="block input-icon input-icon-right">
-															<input type="email" class="form-control" placeholder="Email" />
+                                                            <input type="email" name="email" class="form-control" placeholder="Email" value="{{ old('email') }}" />
 															<i class="ace-icon fa fa-envelope"></i>
 														</span>
 													</label>
 
 													<label class="block clearfix">
 														<span class="block input-icon input-icon-right">
-															<input type="text" class="form-control" placeholder="Username" />
+															<input type="text" class="form-control" name="name" placeholder="Username" value="{{ old('name') }}"/>
 															<i class="ace-icon fa fa-user"></i>
 														</span>
 													</label>
 
 													<label class="block clearfix">
 														<span class="block input-icon input-icon-right">
-															<input type="password" class="form-control" placeholder="Password" />
+															<input type="password" name="password" class="form-control" placeholder="Password" />
 															<i class="ace-icon fa fa-lock"></i>
 														</span>
 													</label>
 
 													<label class="block clearfix">
 														<span class="block input-icon input-icon-right">
-															<input type="password" class="form-control" placeholder="Repeat password" />
+															<input type="password" name="password_confirmation" class="form-control" placeholder="Repeat password" />
 															<i class="ace-icon fa fa-retweet"></i>
 														</span>
 													</label>
@@ -240,7 +249,7 @@
 														<input type="checkbox" class="ace" />
 														<span class="lbl">
 															I accept the
-															<a href="#">User Agreement</a>
+															<a>User Agreement</a>
 														</span>
 													</label>
 
@@ -252,7 +261,7 @@
 															<span class="bigger-110">Reset</span>
 														</button>
 
-														<button type="button" class="width-65 pull-right btn btn-sm btn-success">
+														<button type="submit" id="id_register" disabled class="width-65 pull-right btn btn-sm btn-success">
 															<span class="bigger-110">Register</span>
 
 															<i class="ace-icon fa fa-arrow-right icon-on-right"></i>
@@ -269,7 +278,7 @@
 											</a>
 										</div>
 									</div><!-- /.widget-body -->
-								</div><!-- /.signup-box --> --}}
+								</div><!-- /.signup-box -->
 							</div><!-- /.position-relative -->
 						</div>
 					</div><!-- /.col -->
@@ -301,7 +310,13 @@
 				$(target).addClass('visible');//show target
 			 });
             });
-
+            $("input[type=checkbox]").change(function(){
+                if (!$(this).is(':checked')) {
+                    $('#id_register').attr("disabled", true);
+                }else {
+                    $('#id_register').attr("disabled", false);
+                }
+            });
             // language select
             $('#language').change(function() {
                 window.location.href = $(this).find(':selected').data('href');

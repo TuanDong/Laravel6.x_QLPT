@@ -25,16 +25,16 @@ class LoginRequests extends FormRequest
     public function rules()
     {
         return [
-            'user_name' => 'required | min:4',
-            'pass' => 'required | min:4',
+            'user_name' => 'required',
+            'pass' => 'required | min:8',
         ];
     }
     public function messages()
     {
         return [
             'user_name.required' => 'User name is required',
-            'user_name.min' => trans('messages.length'),
             'pass.required'  => 'Password is required',
+            'pass.min' => trans('messages.length'),
         ];
     }
 
