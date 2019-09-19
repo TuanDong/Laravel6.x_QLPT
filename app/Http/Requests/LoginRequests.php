@@ -26,7 +26,7 @@ class LoginRequests extends FormRequest
     {
         return [
             'user_name' => 'required',
-            'pass' => 'required | min:8',
+            'pass' => 'required | min:4',
         ];
     }
     public function messages()

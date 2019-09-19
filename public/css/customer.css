@@ -1,0 +1,15 @@
+@font-face{
+    font-family: MyFont;
+    src: url(../assets/font-awesome/4.5.0/fonts/fontawesome-webfont.woff);
+    font-weight: 100;
+}
+.skin-3 .navbar{background:#438EB9}
+.skin-3 .nav-list li.active>a:before {
+    top: 24px;
+}
+.skin-3 .nav-list li.active>a:after {
+    top: 24px;
+}
+.menu-text {
+    padding: 5px;
+}

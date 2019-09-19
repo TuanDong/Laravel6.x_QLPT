@@ -21,3 +21,7 @@ Route::post('/','Auth\LoginController@authenticate')->name('aut');
 Route::get('logout', 'Auth\LoginController@logout');
 Route::post('forget', 'Auth\LoginController@forget_password')->name('forget');
 Route::get('home', 'HomeController@index');
+Route::post('updatePrice', 'HomeController@update_price');
+Route::get('listroom', function(){
+    return view('list_room');
+});
