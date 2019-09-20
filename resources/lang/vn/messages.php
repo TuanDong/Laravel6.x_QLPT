@@ -9,5 +9,10 @@ return [
     'en' => 'Tiếng Anh',
     'vn' => 'Tiếng Việt',
     'length' => 'chiều dài lớn hơn 8',
-    'autlogin' => 'Tên đăng nhập hoặc mật khẩu không đúng'
+    'autlogin' => 'Tên đăng nhập hoặc mật khẩu không đúng',
+    'roomName' => 'Tên Phòng',
+    'price' => 'Giá',
+    'number_electric' => 'Số Điện',
+    'number_water' => 'Số Nước',
+    'status' => 'Trạng Thái'
 ];

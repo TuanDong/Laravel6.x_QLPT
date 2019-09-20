@@ -55,6 +55,28 @@
 
 			<div class="navbar-buttons navbar-header pull-right" role="navigation">
                 <ul class="nav ace-nav">
+                    <li class="light-blue">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+                            @if (Session::get('locale') == 'en')
+                                <img src="{{asset('assets/images/icon-language-english.png') }}" alt=""> ENGLISH
+                            @else
+                                <img src="{{asset('assets/images/vn-flag-lang.png') }}" alt=""> VIET NAM
+                            @endif
+                        </a>
+
+                        <ul class="dropdown-menu dropdown-light-blue dropdown-caret">
+                            <li>
+                            <a href="{{url('language','en')}}">
+                                    <img src="{{asset('assets/images/icon-language-english.png') }}" alt=""> ENGLISH
+                                </a>
+                            </li>
+                            <li>
+                                <a href="{{url('language','vn')}}">
+                                    <img src="{{asset('assets/images/vn-flag-lang.png') }}" alt=""> VIET NAM
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
                     <li class="light-blue dropdown-modal">
                         <a data-toggle="dropdown" href="#" class="dropdown-toggle">
                             <img class="nav-user-photo" src="{{asset('assets/images/avatars/user.jpg') }}" alt="Jason's Photo" />
@@ -137,14 +159,14 @@
 					<b class="arrow"></b>
 				</li>
 				<li class="">
-					<a href="{{ url('listroom') }}">
+					<a href="{{ url('renter') }}">
 						<i class="menu-icon fa fa-tachometer"></i>
 						<span class="menu-text"> Danh Sách Người Thuê </span>
 					</a>
 					<b class="arrow"></b>
 				</li>
 				<li class="">
-					<a href="">
+					<a href="{{ url('room_rent') }}">
 						<i class="menu-icon fa fa-tachometer"></i>
 						<span class="menu-text"> Danh Sách Phòng Cho Thuê </span>
 					</a>

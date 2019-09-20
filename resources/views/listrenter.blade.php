@@ -1,16 +1,16 @@
 @extends('layouts.layout')
-@section('title', 'Danh sách phòng')
+@section('title', 'Danh Sách Người Thuê')
 @section('content')
 <div class="row">
     <div class="row">
         <div class="col-xs-12">
-            <h1 class="header smaller lighter blue">DANH SÁCH PHÒNG TRỌ</h1>
+            <h1 class="header smaller lighter blue">DANH SÁCH NGƯỜI THUÊ</h1>
 
             <div class="clearfix">
                 <div class="pull-right tableTools-container"></div>
             </div>
             <div class="table-header">
-                DANH SÁCH PHÒNG
+                DANH SÁCH NGƯỜI THUÊ
                 <div style="float: right; margin:0% 2% 0 0;">
                     <a href="#">
                         <button class="btn btn-sm btn-success"> THÊM </button>
@@ -21,46 +21,53 @@
 
             <!-- div.dataTables_borderWrap -->
             <div>
-                {{-- @if (isset($error) || isset($success))
-                    <div id="show-alert" class="alert '. (isset($error) ?'alert-danger' : 'alert-success').'">;
-                    <button type="button" class="close" data-dismiss="alert"><i class="ace-icon fa fa-times"></i></button>;
-                    <strong><i class="ace-icon fa  {{isset($error) ? 'fa-times' : 'fa-check'}} "></i>{{isset($error) ? ' Error !' : ' Success !'}};
-                    </strong>{{ isset($error) ? $error : $success) }}<br></div>;
-                @endif --}}
+
+                {{-- if (isset($error) || isset($success)) {
+                    echo '<div id="show-alert" class="alert '. (isset($error) ?'alert-danger' : 'alert-success').'">';
+                    echo '<button type="button" class="close" data-dismiss="alert"><i class="ace-icon fa fa-times"></i></button>';
+                    echo '<strong><i class="ace-icon fa '. (isset($error) ? 'fa-times' : 'fa-check').'"></i>'. (isset($error) ? ' Error !' : ' Success !');
+                    echo '</strong>'. (isset($error) ? $error : $success) .'<br></div>';
+                } --}}
+
                 <table id="dynamic-table" class="table table-striped table-bordered table-hover">
                     <thead>
                         <tr>
-                            <th class="center">
-                                STT
-                            </th>
-                            <th>@lang('messages.roomName')</th>
-                            <th>@lang('messages.price')</th>
-                            <th>@lang('messages.number_electric')</th>
-                            <th>@lang('messages.number_water')</th>
-                            <th>@lang('messages.status')</th>
+                            <th class="center">STT</th>
+                            <th>Họ Tên Người Thuê</th>
+                            <th>Số Chứng Minh Nhân Dân</th>
+                            <th>Số Điện Thoại</th>
+                            <th>Ngày Thuê</th>
+                            <th>Ngày Chuyển Đi</th>
+                            <th>Mô Tả Thông Tin Người Thuê</th>
+                            <th>Trạng Thái</th>
                             <th></th>
                         </tr>
                     </thead>
                     <tbody>
-                        @foreach ($list_room as $key => $room)
+                        @foreach ($list_renter as $key => $people)
                         <tr>
-                            <td class="center">{{$key +1}}</td>
-                            <td>{{ $room->NAME_ROOM }}</td>
-                            <td>{{ number_format($room->PRICE) . ' VND' }}</td>
-                            <td>{{ $room->NUMBER_ELECTRIC }}</td>
-                            <td>{{ $room->NUMBER_WATER }}</td>
-
+                            <td class="center">{{ $key += 1  }}</td>
+                            <td>{{ $people->Full_name }}</td>
+                            <td>{{ $people->SCMND }}</td>
+                            <td>{{ $people->PhoneNumber }}</td>
+                            <td>{{ $people->RENTER_DAYIN }}</td>
+                            <td>{{ $people->RENTER_DAYOUT }}</td>
+                            <td>{{ $people->Decription }}</td>
                             <td>
-                                <span class="label label-sm {{ ($room->STATUS == 1) ? 'label-success arrowed arrowed-righ' : 'label-warning arrowed-in' }} ">{{ ($room->STATUS == 1) ? 'Đã thuê' : 'Phòng trống' }}</span>
+                                <span class="label label-sm {{ ($people->Status == 1) ? 'label-success arrowed arrowed-righ' : 'label-danger arrowed-in' }} ">{{ ($people->Status == 1) ? 'Đang Thuê' : 'Chuyển Đi' }}</span>
                             </td>
                             <td>
                                 <div class="hidden-sm hidden-xs btn-group">
                                     <button class="btn btn-xs btn-success">
-                                        <a href="#" style="color: #fff;"><i class="ace-icon fa fa-eye bigger-120"></i></a>
+                                        <a href="#" style="color: #fff;">
+                                            <i class="ace-icon fa fa-eye bigger-120"></i>
+                                        </a>
                                     </button>
 
-                                    <button class="btn btn-xs btn-info" >
-                                    <a href="#" style="color: #fff;"><i class="ace-icon fa fa-pencil bigger-120"></i></a>
+                                    <button class="btn btn-xs btn-info">
+                                        <a href="#" style="color: #fff;">
+                                            <i class="ace-icon fa fa-pencil bigger-120"></i>
+                                        </a>
                                     </button>
 
                                     <button class="btn btn-xs btn-danger">
@@ -112,20 +119,24 @@
         </div>
     </div>
 </div>
-<script>
+<script type="text/javascript">
 $('#dynamic-table')
+// .wrap("<div class='dataTables_borderWrap' />")   //if you are applying horizontal scrolling (sScrollX)
 .DataTable({
     bAutoWidth: false,
     "aoColumns": [{
             "bSortable": false
         },
-        null, null, null, null, null,
+        null, null, null, null, null, null, null,
         {
             "bSortable": false
         }
     ],
-    "aaSorting": [],
-    "pageLength": 15,
+    "aaSorting": [[ 7, "desc" ]],
+    // "iDisplayLength": 50
+    select: {
+        style: 'single'
+    }
 });
 </script>
 @endsection

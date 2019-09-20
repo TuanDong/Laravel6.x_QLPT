@@ -9,5 +9,10 @@ return [
     'en' => 'English',
     'vn' => 'Vietnames',
     'length' => 'length than 8 character',
-    'autlogin' => 'User name or password not ringth'
+    'autlogin' => 'User name or password not ringth',
+    'roomName' => 'Room Name',
+    'price' => 'Price',
+    'number_electric' => 'Number Electric',
+    'number_water' => 'Number Water',
+    'status' => 'Status'
 ];
