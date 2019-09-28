@@ -25,11 +25,11 @@
                 @foreach ($list_renter_room as $key => $room)
                 <div class="col-xs-12 col-sm-3 widget-container-col" style="margin-bottom: 2%;">
                     <div class="widget-box">
-                        <form method="post" action="{{$room->STATUS != 0 ? url() : '' }}">
+                        <form method="post" action="{{$room->STATUS != 0 ? url('/') : '' }}">
                             <input type="hidden" name="id_room" value="{{ $room->ID }}" >
                             <input type="hidden" name="id_renter" value="{{ $room->ID_RENTER }}" >
                             <input type="hidden" name="room_rentID" value="{{ $room->ROOM_RENT_ID }}" >
-                            {{-- <input type="hidden" name="page" value="{{ $curent_page }}" > --}}
+                            <input type="hidden" name="page" value="{{ $curent_page }}" >
                             <div class="widget-header">
                                 <h4 class="widget-title smaller" style="font-weight: bold;"> <i class="ace-icon fa fa-home align-bottom bigger-180"></i>{{ $room->NAME_ROOM }}</h4>
                                 <div class="widget-toolbar">
@@ -51,15 +51,15 @@
                                         <i class="ace-icon fa fa-credit-card icon-on-right bigger-120"></i>
                                         <span class="bigger-110" style="color:{{ $room->STATUS != 0 ?'': 'red' }};">{{ $room->STATUS != 0 ? 'Tính Tiền' : 'Thuê Phòng' }}</span>
                                     </a>
-                                        {{-- if ($room->STATUS != 0) {
-                                            <button class="btn btn-xs btn-danger pull-right" type="submit" style="margin-right: 5%;border-radius: 6px;border-radius: 6px;" >;
-                                            <i class="ace-icon fa fa-lock icon-on-right bigger-120"></i>;
-                                            <span class="bigger-110"> Trả Phòng</span></button>;
-                                            // watch history pay room
-                                            <a class="btn btn-xs btn-info pull-left" onclick="watch_history({{ $room->ID }});" style="margin-right: 5%;border-radius: 6px;border-radius: 6px;" >;
+                                        @if ($room->STATUS != 0)
+                                            <button class="btn btn-xs btn-danger pull-right" type="submit" style="margin-right: 5%;border-radius: 6px;border-radius: 6px;" >
+                                            <i class="ace-icon fa fa-lock icon-on-right bigger-120"></i>
+                                            <span class="bigger-110"> Trả Phòng</span></button>
+                                            {{-- watch history pay room --}}
+                                            <a class="btn btn-xs btn-info pull-left" onclick="watch_history({{ $room->ID }});" style="margin-right: 5%;border-radius: 6px;border-radius: 6px;" >
                                             <i class="ace-icon fa fa-calendar icon-on-right bigger-120"></i>;
-                                            <span class="bigger-110"> Lịch Sử Đóng Tiền</span></a>;
-                                        } --}}
+                                            <span class="bigger-110"> Lịch Sử Đóng Tiền</span></a>
+                                        @endif
                                 </div>
                             </div>
                         </form>
@@ -68,20 +68,20 @@
                 @endforeach
             </div>
             <div class="clearfix"></div>
-            {{-- <div class="wizard-actions" style="margin-top: 1%;">
+            <div class="wizard-actions" style="margin-top: 1%;">
                 <ul class="pagination">
                     <li class="paginate_button previous {{$curent_page > 1?'':'disabled'}}">
-                        <a href="{{$curent_page >1?url('DanhsachphongthueController/index',[$curent_page - 1]):''}} ">Previous</a>
+                        <a {{$curent_page >1? 'href="'.url('room_rent',[$curent_page - 1]).'"':''}}>Previous</a>
                     </li>
-                    for ($i=1; $i <= CEIL($total_page/12); $i++) {
-                        <li class="paginate_button {{($i == $curent_page?'active':'')}}" ><a href="{{url('DanhsachphongthueController/index',[$i])}}">{{$i}}</a></li>;
-                    }
+                    @for ($i=1; $i <= CEIL($total_page/12); $i++)
+                        <li class="paginate_button {{($i == $curent_page?'active':'')}}" ><a href="{{url('room_rent',[$i])}}">{{$i}}</a></li>
+                    @endfor
 
                     <li class="paginate_button next {{ $curent_page == CEIL($total_page/12)?'disabled':''}}" >
-                        <a href=" {{($curent_page < CEIL($total_page/12))? url('DanhsachphongthueController/index',[$curent_page + 1]): ''}}">Next</a>
+                        <a {{($curent_page < CEIL($total_page/12))? 'href="'.url('room_rent',[$curent_page + 1]).'"': ''}}>Next</a>
                     </li>
                 </ul>
-            </div> --}}
+            </div>
         </div>
     </div>
     <div id="modal-caculator" class="modal fade" tabindex="-1">
@@ -192,4 +192,6 @@
         </div><!-- /.modal-dialog -->
     </div>
 </div>
+<script>
+</script>
 @endsection

@@ -13,6 +13,6 @@ class ListRenterController extends Controller
     public function index()
     {
         $list_renter = RoomRenter::all();
-        return view('listrenter',['list_renter' => $list_renter]);
+        return view('list_renter.listrenter',['list_renter' => $list_renter]);
     }
 }

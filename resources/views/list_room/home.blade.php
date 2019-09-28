@@ -12,7 +12,7 @@
             <div class="table-header">
                 DANH SÁCH PHÒNG
                 <div style="float: right; margin:0% 2% 0 0;">
-                    <a href="#">
+                    <a href="{{ url('add_room') }}">
                         <button class="btn btn-sm btn-success"> THÊM </button>
                     </a>
                 </div>

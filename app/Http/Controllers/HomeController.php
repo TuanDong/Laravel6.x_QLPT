@@ -18,7 +18,7 @@ class HomeController extends Controller
         $ojb = ElectricWater::all()->first();
         Session::put('PRICE', $ojb);
         $list_room = ListRoom::all();
-        return view('home',['list_room' => $list_room]);
+        return view('list_room.home',['list_room' => $list_room]);
     }
 
     public function update_price(Request $request)
@@ -27,5 +27,9 @@ class HomeController extends Controller
         $price = ElectricWater::all()->first();
         Session::put('PRICE', $price);
         return $obj;
+    }
+    public function view_add()
+    {
+        return view('list_room.add_room');
     }
 }

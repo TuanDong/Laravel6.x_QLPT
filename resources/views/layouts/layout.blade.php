@@ -81,8 +81,8 @@
                         <a data-toggle="dropdown" href="#" class="dropdown-toggle">
                             <img class="nav-user-photo" src="{{asset('assets/images/avatars/user.jpg') }}" alt="Jason's Photo" />
                             <span class="user-info">
-                                <small>Welcome,</small>
-                                Jason
+                                <small>Welcome</small>
+                                {{Auth::user()->name}}
                             </span>
 
                             <i class="ace-icon fa fa-caret-down"></i>
@@ -97,7 +97,7 @@
                             </li>
 
                             <li>
-                                <a href="profile.html">
+                                <a href="#">
                                     <i class="ace-icon fa fa-user"></i>
                                     Profile
                                 </a>
@@ -150,7 +150,7 @@
 			</div><!-- /.sidebar-shortcuts -->
 
 			<ul class="nav nav-list">
-				<li class="active">
+				<li class="{{ (request()->is('home')) ? 'active' : '' }}">
                 <a href="{{ url('home') }}" text="">
 						<i class="menu-icon fa fa-tachometer"></i>
 						<span class="menu-text"> Danh Sách Phòng Thuê </span>
@@ -158,14 +158,14 @@
 
 					<b class="arrow"></b>
 				</li>
-				<li class="">
+				<li class="{{ (request()->is('renter')) ? 'active' : '' }}">
 					<a href="{{ url('renter') }}">
 						<i class="menu-icon fa fa-tachometer"></i>
 						<span class="menu-text"> Danh Sách Người Thuê </span>
 					</a>
 					<b class="arrow"></b>
 				</li>
-				<li class="">
+				<li class="class="{{ (request()->is('room_rent')) ? 'active' : '' }}"">
 					<a href="{{ url('room_rent') }}">
 						<i class="menu-icon fa fa-tachometer"></i>
 						<span class="menu-text"> Danh Sách Phòng Cho Thuê </span>

@@ -23,4 +23,5 @@ Route::post('forget', 'Auth\LoginController@forget_password')->name('forget');
 Route::get('home', 'HomeController@index');
 Route::post('updatePrice', 'HomeController@update_price');
 Route::get('renter', 'ListRenterController@index');
-Route::get('room_rent', 'ListRenterRoomController@index');
+Route::get('room_rent/{page?}', 'ListRenterRoomController@index');
+Route::get('add_room','HomeController@view_add');
