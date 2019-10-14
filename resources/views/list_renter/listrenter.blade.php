@@ -12,7 +12,7 @@
             <div class="table-header">
                 DANH SÁCH NGƯỜI THUÊ
                 <div style="float: right; margin:0% 2% 0 0;">
-                    <a href="#">
+                    <a href="{{ url('renter/add_renter') }}">
                         <button class="btn btn-sm btn-success"> THÊM </button>
                     </a>
                 </div>
@@ -20,14 +20,14 @@
             <!-- div.table-responsive -->
 
             <!-- div.dataTables_borderWrap -->
-            <div>
+            <div class="table-responsive">
 
-                {{-- if (isset($error) || isset($success)) {
-                    echo '<div id="show-alert" class="alert '. (isset($error) ?'alert-danger' : 'alert-success').'">';
-                    echo '<button type="button" class="close" data-dismiss="alert"><i class="ace-icon fa fa-times"></i></button>';
-                    echo '<strong><i class="ace-icon fa '. (isset($error) ? 'fa-times' : 'fa-check').'"></i>'. (isset($error) ? ' Error !' : ' Success !');
-                    echo '</strong>'. (isset($error) ? $error : $success) .'<br></div>';
-                } --}}
+                @if (session('success'))
+                    <div id="show-alert" class="alert alert-success">
+                    <button type="button" class="close" data-dismiss="alert"><i class="ace-icon fa fa-times"></i></button>
+                    <strong><i class="ace-icon fa fa-check"></i> Success !
+                    </strong> {{session('success')}}<br></div>
+                @endif
 
                 <table id="dynamic-table" class="table table-striped table-bordered table-hover">
                     <thead>
@@ -44,7 +44,11 @@
                         </tr>
                     </thead>
                     <tbody>
+                        @php
+                            $stt = 1;
+                        @endphp
                         @foreach ($list_renter as $key => $people)
+                        @if ($people->IS_DELETE == 0)
                         <tr>
                             <td class="center">{{ $key += 1  }}</td>
                             <td>{{ $people->Full_name }}</td>
@@ -59,19 +63,19 @@
                             <td>
                                 <div class="hidden-sm hidden-xs btn-group">
                                     <button class="btn btn-xs btn-success">
-                                        <a href="#" style="color: #fff;">
+                                        <a href="{{ url('renter/view_detail',$people->ID) }}" style="color: #fff;">
                                             <i class="ace-icon fa fa-eye bigger-120"></i>
                                         </a>
                                     </button>
 
                                     <button class="btn btn-xs btn-info">
-                                        <a href="#" style="color: #fff;">
+                                        <a href="{{ url('renter/view_update',$people->ID) }}" style="color: #fff;">
                                             <i class="ace-icon fa fa-pencil bigger-120"></i>
                                         </a>
                                     </button>
 
                                     <button class="btn btn-xs btn-danger">
-                                        <a href="#" style="color: #fff;">
+                                        <a href="{{ url('renter/delete',$people->ID) }}" style="color: #fff;">
                                             <i class="ace-icon fa fa-trash-o bigger-120"></i>
                                         </a>
                                     </button>
@@ -85,7 +89,7 @@
 
                                         <ul class="dropdown-menu dropdown-only-icon dropdown-yellow dropdown-menu-right dropdown-caret dropdown-close">
                                             <li>
-                                                <a href="#" class="tooltip-info" data-rel="tooltip" title="" data-original-title="View">
+                                                <a href="{{ url('renter/view_detail',$people->ID) }}" class="tooltip-info" data-rel="tooltip" title="" data-original-title="View">
                                                     <span class="blue">
                                                         <i class="ace-icon fa fa-eye bigger-120"></i>
                                                     </span>
@@ -93,7 +97,7 @@
                                             </li>
 
                                             <li>
-                                                <a href="#" class="tooltip-success" data-rel="tooltip" title="" data-original-title="Edit">
+                                                <a href="{{ url('renter/view_update',$people->ID) }}" class="tooltip-success" data-rel="tooltip" title="" data-original-title="Edit">
                                                     <span class="green">
                                                         <i class="ace-icon fa fa-pencil-square-o bigger-120"></i>
                                                     </span>
@@ -101,7 +105,7 @@
                                             </li>
 
                                             <li>
-                                                <a href="#" class="tooltip-error" data-rel="tooltip" title="" data-original-title="Delete">
+                                                <a href="{{ url('renter/delete',$people->ID) }}" class="tooltip-error" data-rel="tooltip" title="" data-original-title="Delete">
                                                     <span class="red">
                                                         <i class="ace-icon fa fa-trash-o bigger-120"></i>
                                                     </span>
@@ -112,6 +116,10 @@
                                 </div>
                             </td>
                         </tr>
+                        @php
+                            $stt ++;
+                        @endphp
+                        @endif
                         @endforeach
                     </tbody>
                 </table>

@@ -5,7 +5,7 @@
 	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
 	<meta charset="utf-8" />
 	<title>@yield('title')</title>
-	<link rel="shortcut icon" type="image/png" href="favicon.ico"/>
+    <link rel="icon" type="image/png" sizes="16x16" href="assets/images/vn-flag-lang.png">
 	<meta name="description" content="overview &amp; stats" />
 	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0" />
     <meta name="csrf-token" content="{{ csrf_token() }}">
@@ -44,7 +44,16 @@
 
 	<div id="navbar" class="navbar navbar-default ace-save-state">
 		<div class="navbar-container ace-save-state" id="navbar-container">
-			<div class="navbar-header pull-left">
+            <button type="button" class="navbar-toggle menu-toggler pull-left" id="menu-toggler" data-target="#sidebar">
+                <span class="sr-only">Toggle sidebar</span>
+
+                <span class="icon-bar"></span>
+
+                <span class="icon-bar"></span>
+
+                <span class="icon-bar"></span>
+            </button>
+            <div class="navbar-header pull-left">
 				<a href="#" class="navbar-brand">
 					<small>
 						<i class="fa fa-leaf"></i>
@@ -150,7 +159,7 @@
 			</div><!-- /.sidebar-shortcuts -->
 
 			<ul class="nav nav-list">
-				<li class="{{ (request()->is('home')) ? 'active' : '' }}">
+				<li class="{{ (request()->is('home*')) ? 'active' : '' }}">
                 <a href="{{ url('home') }}" text="">
 						<i class="menu-icon fa fa-tachometer"></i>
 						<span class="menu-text"> Danh Sách Phòng Thuê </span>
@@ -158,14 +167,14 @@
 
 					<b class="arrow"></b>
 				</li>
-				<li class="{{ (request()->is('renter')) ? 'active' : '' }}">
+				<li class="{{ (request()->is('renter*')) ? 'active' : '' }}">
 					<a href="{{ url('renter') }}">
 						<i class="menu-icon fa fa-tachometer"></i>
 						<span class="menu-text"> Danh Sách Người Thuê </span>
 					</a>
 					<b class="arrow"></b>
 				</li>
-				<li class="class="{{ (request()->is('room_rent')) ? 'active' : '' }}"">
+				<li class="{{ (request()->is('room_rent*')) ? 'active' : '' }}">
 					<a href="{{ url('room_rent') }}">
 						<i class="menu-icon fa fa-tachometer"></i>
 						<span class="menu-text"> Danh Sách Phòng Cho Thuê </span>
@@ -186,7 +195,7 @@
 						<div class="col-xs-12">
 							<!-- PAGE CONTENT BEGINS -->
 							@yield('content')
-							<!-- PAGE CONTENT ENDS -->
+                            <!-- PAGE CONTENT ENDS -->
 						</div><!-- /.col -->
 					</div><!-- /.row -->
 				</div><!-- /.page-content -->
@@ -269,7 +278,10 @@
 
 	<!-- ace scripts -->
 	<!-- <script src="assets/js/ace-elements.min.js"></script> -->
-	<script src="{{asset('assets/js/ace.min.js') }}"></script>
+    <script src="{{asset('assets/js/ace.min.js') }}"></script>
+    <script type="text/javascript">
+        if('ontouchstart' in document.documentElement) document.write("<script src='assets/js/jquery.mobile.custom.min.js'>"+"</"+"script>");
+    </script>
 	<script>
 		var realDate = new Date();
 		$(".date-picker").datepicker({
@@ -287,7 +299,7 @@
 			var id = $('#id-electric-water').val();
 			$.ajax({
 				method: "POST",
-				url:"updatePrice",
+				url:"home/updatePrice",
 				data:{
 					id : id,
 					priceElectric :priceElectric,

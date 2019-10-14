@@ -15,17 +15,17 @@
             <!-- div.table-responsive -->
             <!-- div.dataTables_borderWrap -->
             <div style="margin-top: 1%;">
-
-                {{-- if (isset($error) || isset($success)) {
-                    <div id="show-alert" class="alert {{(isset($error) ?'alert-danger' : 'alert-success')}}">;
-                    <button type="button" class="close" data-dismiss="alert"><i class="ace-icon fa fa-times"></i></button>;
-                    <strong><i class="ace-icon fa {{(isset($error) ? 'fa-times' : 'fa-check')}}"></i>{{(isset($error) ? ' Error !' : ' Success !')}};
-                    </strong>{{(isset($error) ? $error : $success) }}<br></div>';
-                } --}}
+                @if (session('success'))
+                    <div id="show-alert" class="alert alert-success ">
+                    <button type="button" class="close" data-dismiss="alert"><i class="ace-icon fa fa-times"></i></button>
+                    <strong><i class="ace-icon fa fa-check"></i> Success !
+                    </strong>{{ session('success') }}<br></div>
+                @endif
                 @foreach ($list_renter_room as $key => $room)
                 <div class="col-xs-12 col-sm-3 widget-container-col" style="margin-bottom: 2%;">
                     <div class="widget-box">
-                        <form method="post" action="{{$room->STATUS != 0 ? url('/') : '' }}">
+                        <form method="post" action="{{$room->STATUS != 0 ? url('room_rent/leaver_room') : '' }}">
+                            @csrf
                             <input type="hidden" name="id_room" value="{{ $room->ID }}" >
                             <input type="hidden" name="id_renter" value="{{ $room->ID_RENTER }}" >
                             <input type="hidden" name="room_rentID" value="{{ $room->ROOM_RENT_ID }}" >
@@ -33,7 +33,7 @@
                             <div class="widget-header">
                                 <h4 class="widget-title smaller" style="font-weight: bold;"> <i class="ace-icon fa fa-home align-bottom bigger-180"></i>{{ $room->NAME_ROOM }}</h4>
                                 <div class="widget-toolbar">
-                                    <span class="label label-lg arrowed arrowed-right {{$room->STATUS != 0 ? 'label-primary' : 'label-danger'}};"><i class="ace-icon fa fa-bookmark align-top bigger-120"></i></span>
+                                    <span class="label label-lg arrowed arrowed-right {{$room->STATUS != 0 ? 'label-primary' : 'label-danger'}}"><i class="ace-icon fa fa-bookmark align-top bigger-120"></i></span>
                                 </div>
                             </div>
 
@@ -47,7 +47,7 @@
                                     </div>
                                 </div>
                                 <div class="widget-toolbox padding-8 clearfix">
-                                    <a class="btn btn-xs btn-primary pull-right "  {{ $room->STATUS != 0 ? 'data-toggle="modal" data-target="#modal-caculator"' : 'href=""' }}  style="border-radius: 6px;" >
+                                    <a class="btn btn-xs btn-primary pull-right "  {{ $room->STATUS != 0 ? 'data-toggle=modal data-target=#modal-caculator onclick=setID('.$room->ID.','.$room->NUMBER_ELECTRIC .','.$room->NUMBER_WATER.','.$room->PRICE.','.$room->ID_RENTER .');' : 'href='.url('room_rent/view_add',[$room->ID,$curent_page]) }}  style="border-radius: 6px;" >
                                         <i class="ace-icon fa fa-credit-card icon-on-right bigger-120"></i>
                                         <span class="bigger-110" style="color:{{ $room->STATUS != 0 ?'': 'red' }};">{{ $room->STATUS != 0 ? 'Tính Tiền' : 'Thuê Phòng' }}</span>
                                     </a>
@@ -57,7 +57,7 @@
                                             <span class="bigger-110"> Trả Phòng</span></button>
                                             {{-- watch history pay room --}}
                                             <a class="btn btn-xs btn-info pull-left" onclick="watch_history({{ $room->ID }});" style="margin-right: 5%;border-radius: 6px;border-radius: 6px;" >
-                                            <i class="ace-icon fa fa-calendar icon-on-right bigger-120"></i>;
+                                            <i class="ace-icon fa fa-calendar icon-on-right bigger-120"></i>
                                             <span class="bigger-110"> Lịch Sử Đóng Tiền</span></a>
                                         @endif
                                 </div>
@@ -84,6 +84,7 @@
             </div>
         </div>
     </div>
+    {{-- modal cucalator --}}
     <div id="modal-caculator" class="modal fade" tabindex="-1">
         <div class="modal-dialog">
             <div class="modal-content">
@@ -156,7 +157,7 @@
         </div><!-- /.modal-dialog -->
     </div>
 
-    <!--  modal history -->
+    {{--  modal history --}}
     <div id="modal-history" class="modal fade" tabindex="-1">
         <div class="modal-dialog modal-lg">
             <div class="modal-content">
@@ -193,5 +194,93 @@
     </div>
 </div>
 <script>
+    function setID(id,num_elec,num_water,price,idRenter) {
+        $("#id-room").val(id);
+        $("#id-renter").val(idRenter);
+        $("#number-month").val(1);
+        $("#number-electric").val(0);
+        $("#number-water").val(0);
+        $("#money-other").val(0);
+        $("#id-decription").text('');
+        $("#water-old").val(num_water);
+        $("#electric-old").val(num_elec);
+        $("#room-price").val(price);
+        $("#id-total").hide();
+        $("#id-btn-payall").show();
+    }
+    function payall() {
+        id = $("#id-room").val();
+        idRenter = $("#id-renter").val();
+        date_pay = $("#id-datepicker").val();
+        month = $("#number-month").val();
+        number_electric = $("#number-electric").val();
+        number_water = $("#number-water").val();
+        money_other = $("#money-other").val();
+        decription = $("#id-decription").val();
+        water_old = $("#water-old").val();
+        electric_old = $("#electric-old").val();
+        room_price = $("#room-price").val();
+        if ( (number_electric == 0 && number_water == 0) || (parseInt(number_electric) >= parseInt(electric_old) && parseInt(number_water) >= parseInt(water_old))) {
+            $.ajax({
+                method: "POST",
+                url:'/room_rent/pay_all',
+                data: {
+                    id: id,
+                    date_pay: date_pay,
+                    month: month,
+                    number_electric: number_electric,
+                    number_water: number_water,
+                    money_other: money_other,
+                    decription: decription,
+                    water_old: water_old,
+                    electric_old: electric_old,
+                    room_price: room_price,
+                    idRenter: idRenter
+                },
+            }).done (function (data){
+                if (data == 'false') {
+                    alert('Lỗi Tính Toán...!');
+                } else {
+                    var nd = "Tổng Cộng: " + data;
+                    $("#id-total").show();
+                    $("#id-label-total").text(nd.replace(/"/g, ""));
+                    $("#id-btn-payall").hide();
+                }
+            }).fail(function (error) {
+                alert('Lỗi Tính Toán...!');
+            });
+        } else {
+            alert("Lỗi Số Điện Nước...!");
+        }
+    }
+    function watch_history(roomID) {
+        var table = $('#table-history').DataTable({ bAutoWidth: false, retrieve: true,});
+        $.ajax({
+            method: "POST",
+            url:'/room_rent/watch_history/',
+            data:{
+                roomID
+            }
+        }).done (function (data){
+            var stt =1;
+            table.clear().draw();
+                if (data.length != 0) {
+                    data.forEach(element => {
+                        table.row.add( [
+                            stt,
+                            element.DATE_PAY,
+                            element.DECRIPTION,
+                            element.PRICE,
+                            element.PAY_OTHER,
+                            element.MONTH
+                        ] ).draw();
+                        stt ++;
+                    });
+                }
+                $("#modal-history").modal('show');
+        }).fail(function (error) {
+            console.log(error);
+        });
+    }
 </script>
 @endsection
