@@ -180,6 +180,13 @@
 						<span class="menu-text"> Danh Sách Phòng Cho Thuê </span>
 					</a>
 					<b class="arrow"></b>
+                </li>
+                <li class="{{ (request()->is('maps*')) ? 'active' : '' }}">
+					<a href="{{ url('maps') }}">
+						<i class="menu-icon fa fa-tachometer"></i>
+						<span class="menu-text"> Vị Trí Phòng Trọ</span>
+					</a>
+					<b class="arrow"></b>
 				</li>
 			</ul><!-- /.nav-list -->
 

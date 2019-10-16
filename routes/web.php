@@ -58,6 +58,7 @@ Route::group(['prefix' => 'room_rent'], function () {
         return 'error';
     });
 });
+Route::get('maps', 'MapsController@index');
 Route::get('{any}', function () {
     return 'error';
 });
