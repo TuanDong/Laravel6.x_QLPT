@@ -130,7 +130,7 @@
 		<div id="sidebar" class="sidebar responsive ace-save-state compact">
 			<div class="sidebar-shortcuts">
 				<div class="sidebar-shortcuts-large">
-					<button class="btn btn-success">
+					<button class="btn btn-success" onclick="test()">
 						<i class="ace-icon fa fa-signal"></i>
 					</button>
 
@@ -323,6 +323,21 @@
 				alert('Không Thành Công... !');
 			});
 		}
+        // function test () {
+        //     $.ajax({
+		// 		method: "POST",
+		// 		url:"api/login",
+        //         //headers:{ "Content-Type": "application/json"},
+		// 		data:{
+		// 			name:"admin",
+	    //             password:"admin"
+		// 		}
+		// 	}).done (function (data){
+		// 		console.log(data);
+		// 	}).fail( function (error) {
+		// 		alert('error');
+		// 	});
+        // }
 	</script>
 </body>
 
