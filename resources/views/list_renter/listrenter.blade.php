@@ -50,7 +50,7 @@
                         @foreach ($list_renter as $key => $people)
                         @if ($people->IS_DELETE == 0)
                         <tr>
-                            <td class="center">{{ $key += 1  }}</td>
+                            <td class="center">{{ $stt }}</td>
                             <td>{{ $people->Full_name }}</td>
                             <td>{{ $people->SCMND }}</td>
                             <td>{{ $people->PhoneNumber }}</td>
