@@ -45,7 +45,7 @@ class ListRenterController extends Controller
         $SCMND = $request->input('from-field-scmnd');
         $PhoneNumber = $request->input('from-field-number-phone');
         $Decription = $request->input('form-field-textarea');
-        $Status = $request->input('from-field-status');;
+        $Status = $request->input('from-field-status');
         RoomRenter::where('ID', $id)->update(['Full_name'=>$Full_name,'SCMND'=>$SCMND,'PhoneNumber'=>$PhoneNumber,'Decription'=>$Decription,'Status'=>$Status,'IS_DELETE'=>0]);
         return redirect('renter')->with('success', 'Sua thanh cong !');
     }
