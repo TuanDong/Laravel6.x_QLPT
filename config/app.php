@@ -166,6 +166,7 @@ return [
          * Package Service Providers...
          */
         Cornford\Googlmapper\MapperServiceProvider::class,
+        Barryvdh\Cors\ServiceProvider::class,
 
         /*
          * Application Service Providers...
