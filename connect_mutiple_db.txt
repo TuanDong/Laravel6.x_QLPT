@@ -1,0 +1,18 @@
+cach 1 dung query builder:
+ https://laravel.com/docs/6.x/database
+DB::disconnect(env('DB_DATABASE'));
+Config::set('database.connections.mysql', array(
+	'driver' 	=> 'mysql',
+	'host'		=> (env('DB_HOST') == ''?Session::get('DB_HOST'): env('DB_HOST')),
+	'port' 		=> (env('DB_PORT') == ''?Session::get('DB_PORT'):env('DB_PORT')),
+	'database'  => Session::get('DB_DATABASE'),
+	'username' 	=> (env('DB_USERNAME') == ''?Session::get('DB_USERNAME'):env('DB_USERNAME')),
+	'password' 	=> (env('DB_PASSWORD') == ''?Session::get('DB_PASSWORD'):env('DB_PASSWORD')),
+	'charset' 	=> 'utf8',
+	'collation' => 'utf8_unicode_ci',
+	'prefix' 	=> '',
+));
+DB::reconnect('mysql');
+ 
+cach 2 Eloquent:
+ https://stackoverflow.com/questions/31847054/how-to-use-multiple-databases-in-laravel
